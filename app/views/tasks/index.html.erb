@@ -1,0 +1,12 @@
+<h1>タスク一覧</h1>
+
+<% @task.each do |task| %>
+  <table>
+    <tr>
+      <td><%= task.name %></td>
+      <td><%= task.explanation %></td>
+      <td><%= link_to "詳細", task %></td>
+    </tr>
+  </table>
+
+<% end %>
