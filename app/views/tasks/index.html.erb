@@ -9,6 +9,7 @@
       <td><%= task.explanation %></td>
       <td><%= link_to "詳細", task %></td>
       <td><%= link_to "編集", edit_task_path(task.id) %></td>
+      <td><%= button_to "削除", task_path(task.id), method: :delete %></td>
     </tr>
   </table>
 
