@@ -17,6 +17,9 @@
   <%= f.label :explanation %>
   <%= f.text_area :explanation %>
 
+  <%= f.label :deadline %>
+  <%= f.datetime_select :deadline %>
+
   <%= f.submit %>
 
   <%= link_to "戻る", tasks_path %>

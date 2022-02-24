@@ -1,12 +1,14 @@
 <h1>タスク一覧</h1>
 
 <%= link_to "新規作成", new_task_path %>
+<%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
 
 <% @task.each do |task| %>
   <table>
     <tr>
       <td><%= task.name %></td>
       <td><%= task.explanation %></td>
+      <td><%= task.deadline.strftime('%Y/%m/%d %R') %></td>
       <td><%= task.updated_at.strftime('%Y/%m/%d %R') %></td>
       <td><%= link_to "詳細", task %></td>
       <td><%= link_to "編集", edit_task_path(task.id) %></td>

@@ -10,3 +10,4 @@ ja:
       task:
         name: タスク
         explanation: 説明文
+        deadline: 締切

@@ -1,4 +1,11 @@
 require 'rails_helper'
+
+def visit_with_http_auth(path)
+  username = ENV['USERNAME']
+  password = ENV['PASSWORD']
+  visit "http://#{username}:#{password}@#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}#{path}"
+end
+
 RSpec.describe 'タスク管理機能', type: :system do
   
   before do
@@ -9,14 +16,17 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
-
+        visit_with_http_auth root_path
         visit new_task_path
         fill_in 'タスク', with: 'test001'
         fill_in '説明文', with: 'explanation001'
+        select_date("2022,5,11", from: "締切")
+        select_time("11", "12", from: "締切")
         click_button '登録する'
         visit tasks_path
         expect(page).to have_content 'test001'
         expect(page).to have_content 'explanation001'
+        expect(page).to have_content '2022/05/11 11:12'
 
       end
     end
@@ -24,7 +34,7 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '一覧表示機能' do
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
-
+        visit_with_http_auth root_path
         visit tasks_path
         expect(page).to have_content 'test_title'
         expect(page).to have_content 'test_explanation'
@@ -36,6 +46,7 @@ RSpec.describe 'タスク管理機能', type: :system do
 
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
+        visit_with_http_auth root_path
         visit tasks_path
         id = all('table')
         expect(id[0]).to have_content 'Factoryで作ったデフォルトの名前'
@@ -45,18 +56,33 @@ RSpec.describe 'タスク管理機能', type: :system do
 
       end
     end
+
+    context '終了期限でソートするというリンクを押す場合' do
+      it '終了期限の降順に並び変えられたタスク一覧が表示される' do
+        visit_with_http_auth root_path
+        visit tasks_path
+        click_link '終了期限でソートする'
+        id = all('table')
+        expect(id[0]).to have_content 'test_title'
+        expect(id[1]).to have_content 'Factoryで作ったデフォルトの名前'
+      end
+    end
+
   end
 
   describe '詳細表示機能' do
     context '任意のタスク詳細画面に遷移した場合' do
      it '該当タスクの内容が表示される' do
 
+      visit_with_http_auth root_path
       visit tasks_path
-      all('table tbody tr')[1].click_link '詳細'
+      id = all('table tbody tr')
+      id[1].click_link '詳細'
       expect(page).to have_content 'test_title'
       expect(page).to have_content 'test_explanation'
       click_link '戻る'
-      all('table tbody tr')[0].click_link '詳細'
+      id = all('table tbody tr')
+      id[0].click_link '詳細'
       expect(page).to have_content "Factoryで作ったデフォルトの名前"
       expect(page).to have_content 'Factoryで作ったデフォルトの説明'
 
