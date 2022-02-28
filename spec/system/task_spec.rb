@@ -62,6 +62,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '終了期限の降順に並び変えられたタスク一覧が表示される' do
         visit tasks_path
         click_link '終了期限でソートする'
+        sleep(1)
         id = all('table tbody tr')
         expect(id[0]).to have_content 'test_title'
         expect(id[1]).to have_content 'Factoryで作ったデフォルトの名前'
