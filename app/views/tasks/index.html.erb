@@ -13,6 +13,8 @@
   <%= f.submit "検索" %>
 <% end %>
 
+<%= paginate @tasks %>
+
 <table>
   <thead>
     <tr>
@@ -38,7 +40,6 @@
           <td><%= button_to "削除", task_path(task.id), method: :delete %></td>
         </tr>
     <% end %>
-    <tr><td><%= paginate @tasks %></td></tr>
   </tbody>
 
 </table>

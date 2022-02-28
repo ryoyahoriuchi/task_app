@@ -92,11 +92,13 @@ RSpec.describe 'タスク管理機能', type: :system do
       visit tasks_path
       id = all('table tbody tr')
       id[1].click_link '詳細'
+      sleep(1)
       expect(page).to have_content 'test_title'
       expect(page).to have_content 'test_explanation'
       click_link '戻る'
       id = all('table tbody tr')
       id[0].click_link '詳細'
+      sleep(1)
       expect(page).to have_content "Factoryで作ったデフォルトの名前"
       expect(page).to have_content 'Factoryで作ったデフォルトの説明'
       end
