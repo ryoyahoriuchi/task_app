@@ -3,5 +3,6 @@
 <p>タスク名：<%= @task.name %></p>
 <p>タスク説明：<%= @task.explanation %></p>
 <p>タスク締切：<%= @task.deadline.strftime('%Y/%m/%d %R') %></p>
+<p>進捗：<%= @task.progress %></p>
 
 <%= link_to "戻る", tasks_path %>

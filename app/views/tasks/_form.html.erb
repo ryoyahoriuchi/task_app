@@ -20,6 +20,9 @@
   <%= f.label :deadline %>
   <%= f.datetime_select :deadline %>
 
+  <%= f.label :progress %>
+  <%= f.select :progress, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]] %>
+
   <%= f.submit %>
 
   <%= link_to "戻る", tasks_path %>
