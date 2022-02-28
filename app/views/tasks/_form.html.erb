@@ -23,6 +23,9 @@
   <%= f.label :progress %>
   <%= f.select :progress, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]] %>
 
+  <%= f.label :priority %>
+  <%= f.select :priority, Task.priorities.keys.to_a %>
+
   <%= f.submit %>
 
   <%= link_to "戻る", tasks_path %>

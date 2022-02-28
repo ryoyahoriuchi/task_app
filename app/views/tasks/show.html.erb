@@ -4,5 +4,6 @@
 <p>タスク説明：<%= @task.explanation %></p>
 <p>タスク締切：<%= @task.deadline.strftime('%Y/%m/%d %R') %></p>
 <p>進捗：<%= @task.progress %></p>
+<p>優先順位：<%= @task.priority %></p>
 
 <%= link_to "戻る", tasks_path %>

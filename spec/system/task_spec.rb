@@ -10,8 +10,8 @@ RSpec.describe 'タスク管理機能', type: :system do
   
   before do
     # Task.destroy_all
-    FactoryBot.create(:task)
-    FactoryBot.create(:second_task)
+    @task1 = FactoryBot.create(:task)
+    @task2 = FactoryBot.create(:second_task)
     visit_with_http_auth root_path
   end
 
@@ -65,6 +65,23 @@ RSpec.describe 'タスク管理機能', type: :system do
         id = all('table tbody tr')
         expect(id[0]).to have_content 'test_title'
         expect(id[1]).to have_content 'Factoryで作ったデフォルトの名前'
+      end
+    end
+
+    context '優先順位でソートするというリンクを押す場合' do
+      it '優先順位の降順に並び替えられたタスク一覧が表示される' do
+        @task3 = FactoryBot.create(:third_task)
+        @task4 = FactoryBot.create(:fourth_task)
+        @task5 = FactoryBot.create(:fifth_task)
+        visit tasks_path
+        click_link '優先順位でソートする'
+        sleep(1)
+        id = all('table tbody tr')
+        expect(id[0]).to have_content '掃除'
+        expect(id[1]).to have_content 'Factoryで作ったデフォルトの名前'
+        expect(id[2]).to have_content 'test'
+        expect(id[3]).to have_content 'test_title'
+        expect(id[4]).to have_content 'rspec'
       end
     end
   end

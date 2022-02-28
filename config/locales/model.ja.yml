@@ -19,3 +19,7 @@ ja:
         waiting: "未着手"
         working: "着手中"
         completed: "完了"
+      priority:
+        rou: "低"
+        normal: "中"
+        high: "高"
