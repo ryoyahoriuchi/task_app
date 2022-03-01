@@ -12,7 +12,7 @@
 |--------------|----------|
 | name         | string   |
 | explanation  | text     |
-| deadline     | integer  |
+| deadline     | datetime |
 | progress     | string   |
 | priority     | integer  |
 | user_id      | index    | 

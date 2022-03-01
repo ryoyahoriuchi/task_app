@@ -10,3 +10,16 @@ ja:
       task:
         name: タスク
         explanation: 説明文
+        deadline: 締切
+        progress: 進捗
+        search: 検索
+  enums:
+    task:
+      progress:
+        waiting: "未着手"
+        working: "着手中"
+        completed: "完了"
+      priority:
+        rou: "低"
+        normal: "中"
+        high: "高"
