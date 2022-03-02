@@ -1,0 +1,30 @@
+<h1>管理画面</h1>
+<h2><%= @user.name %>のタスク一覧</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>タスク</th>
+      <th>説明</th>
+      <th>締切</th>
+      <th>更新日</th>
+      <th>進捗</th>
+      <th>優先順位</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user.tasks.each do |task| %>
+        <tr>
+          <td><%= task.name %></td>
+          <td><%= task.explanation %></td>
+          <td><%= task.deadline.strftime('%Y/%m/%d %R') %></td>
+          <td><%= task.updated_at.strftime('%Y/%m/%d %R') %></td>
+          <td><%= task.progress %></td>
+          <td><%= task.priority %></td>
+        </tr>
+    <% end %>
+  </tbody>
+
+</table>
+
+<%= link_to "戻る", admin_users_path %>
