@@ -1,4 +1,6 @@
 class Admin::UsersController < ApplicationController
+  include Admin::UsersHelper
+  before_action :admin_user
   before_action :set_user, only: %i( show edit update destroy )
 
   def index
@@ -40,7 +42,7 @@ class Admin::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin)
   end
 
   def set_user

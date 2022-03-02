@@ -17,12 +17,16 @@
   <%= f.label :email %>
   <%= f.text_field :email %>
 
-  <%= f.label :password %>
-  <%= f.password_field :password %>
+  <% if action_name == 'new' %>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  <% end %>
 
-  <%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %>
-  
+  <%= f.label :admin %>
+  <%= f.select :admin, [['管理', 'true'], ['一般', 'false']] %>
+
   <%= f.submit %>
 <% end %>
 
