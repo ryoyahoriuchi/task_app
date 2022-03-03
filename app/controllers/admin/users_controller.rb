@@ -30,13 +30,16 @@ class Admin::UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to admin_users_path, notice: "ユーザーを編集しました"
     else
-      render :edit
+      redirect_to admin_users_path, notice: "ユーザーを編集できませんでした"
     end
   end
 
   def destroy
-    @user.destroy
-    redirect_to admin_users_path, notice: "ユーザーを削除しました"
+    if @user.destroy
+      redirect_to admin_users_path, notice: "ユーザーを削除しました"
+    else
+      redirect_to admin_users_path, notice: "ユーザーを削除できませんでした"
+    end
   end
 
   private

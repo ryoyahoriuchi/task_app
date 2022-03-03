@@ -11,7 +11,7 @@ class TasksController < ApplicationController
       tasks = tasks.name_search(params[:task][:search]) if params[:task].present?
     end
     
-    @tasks = tasks.user_sorted(current_user.id).page(params[:page]).per(4)
+    @tasks = tasks.user_sorted(current_user.id).page(params[:page]).per(10)
   end
 
   def new

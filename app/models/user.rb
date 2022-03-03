@@ -21,7 +21,6 @@ class User < ApplicationRecord
   end
 
   def hold_admin_update
-    #raise
     throw(:abort) if (self.admin == false) && (User.where(admin: true).count <= 1)
   end
 end
