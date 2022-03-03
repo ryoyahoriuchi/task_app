@@ -17,46 +17,48 @@ RSpec.describe Task, type: :model do
       end
       context 'タスクのタイトルと詳細に内容が記載されている場合' do
         it 'バリデーションが通る' do
-          task = Task.new(name: 'task02', explanation: '成功テスト')
+          user = FactoryBot.create(:second_user)
+          task = Task.new(name: 'task02', explanation: '成功テスト', user_id: user.id)
           expect(task).to be_valid
+          User.destroy_all
         end
-      end
+      end 
     end
   end
 
   describe '検索機能', type: :model do
     describe 'scopeメソッドのテスト' do
 
-      before do
-        @task1 = FactoryBot.create(:task)
-        @task2 = FactoryBot.create(:second_task)
-        @task3 = FactoryBot.create(:third_task)
-        @task4 = FactoryBot.create(:fourth_task)
-        @task5 = FactoryBot.create(:fifth_task)
-      end
+      let!(:second_user) { FactoryBot.create(:second_user) }
+      let!(:task) { FactoryBot.create(:task, user: second_user) }
+      let!(:second_task) { FactoryBot.create(:second_task, user: second_user) }
+      let!(:third_task) { FactoryBot.create(:third_task, user: second_user) }
+      let!(:fourth_task) { FactoryBot.create(:fourth_task, user: second_user) }
+      let!(:fifth_task) { FactoryBot.create(:fifth_task, user: second_user) }
 
       context '検索欄に記載がある場合' do
         it 'タイトルのあいまい検索ができる' do
-          expect(Task.name_search('test')).to include(@task5)
+          expect(Task.name_search('test')).to include(task, fifth_task)
+          expect(Task.name_search('test')).to_not include(second_task, third_task, fourth_task)
         end
       end
       context '検索欄に記載がない場合' do
         it 'タスク一覧が表示される' do
-          expect(Task.name_search("")).to include(@task1, @task2, @task3, @task4, @task5)
+          expect(Task.name_search("")).to include(task, second_task, third_task, fourth_task, fifth_task)
         end
       end
 
       context '進捗欄に記載がある場合' do
         it '該当するタスクが表示される' do
-          expect(Task.progress_search("未着手")).to include(@task2, @task4)
-          expect(Task.progress_search("着手中")).to include(@task1)
-          expect(Task.progress_search("完了")).to include(@task3, @task5)
+          expect(Task.progress_search("未着手")).to include(second_task, fourth_task)
+          expect(Task.progress_search("着手中")).to include(task)
+          expect(Task.progress_search("完了")).to include(third_task, fifth_task)
         end
       end
 
       context 'タイトル欄と進捗欄に記載があり検索する場合' do
         it '両方に該当するタスクが表示される' do
-          expect(Task.progress_search("完了").name_search("test")).to include(@task5)
+          expect(Task.progress_search("完了").name_search("test")).to include(fifth_task)
         end
       end
 

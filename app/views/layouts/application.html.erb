@@ -15,8 +15,14 @@
   <header>
     <ul class="top_menu clearfix">
       <li><h3>Task app<h3></li>
-      <li><%= link_to "Profile" %></li>
-      <li><%= link_to "index", tasks_path %></li>
+      <% if logged_in? %>
+        <li><%= link_to "Profile", user_path(current_user.id) %></li>
+        <li><%= link_to "Index", tasks_path %></li>
+        <li><%= link_to "Logout", session_path(current_user.id), method: :delete %></li>
+      <% else %>
+        <li><%= link_to "Sign up", new_user_path %></li>
+        <li><%= link_to "Login", new_session_path %></li>
+      <% end %>
     </ul>
   </header>
   <main>

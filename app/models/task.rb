@@ -19,4 +19,7 @@ class Task < ApplicationRecord
   scope :progress_search, -> (search){where(progress: "#{search}")}
   scope :name_search, -> (search){ where("name LIKE ?", "%#{search}%") }
   scope :priority_sorted, -> { order(priority: :desc)}
+  scope :user_sorted, -> (user){ where(user_id: user)}
+
+  belongs_to :user
 end
