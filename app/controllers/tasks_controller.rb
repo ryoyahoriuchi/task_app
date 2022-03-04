@@ -11,6 +11,7 @@ class TasksController < ApplicationController
       tasks = tasks.name_search(params[:task][:search]) if params[:task].present?
     end
     
+    tasks = tasks.with_labels.search_with_id(params[:label_id]) if params[:label_id].present?
     @tasks = tasks.user_sorted(current_user.id).page(params[:page]).per(10)
   end
 
@@ -49,7 +50,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :explanation, :deadline, :progress, :priority)
+    params.require(:task).permit(:name, :explanation, :deadline, :progress, :priority, { label_ids: [] })
   end
 
   def set_task

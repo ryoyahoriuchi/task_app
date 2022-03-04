@@ -12,9 +12,14 @@
   <%= f.submit "検索" %>
 <% end %>
 
+<%= form_with url: tasks_path, method: :get, local: true do |f| %>
+  <%= f.select("label_id", Label.pluck(:name, :id), { include_brank: true }) %>
+  <%= f.submit "検索", name: nil %>
+<% end %>
+
 <%= paginate @tasks %>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>名前</th>
@@ -24,6 +29,8 @@
       <th>更新日</th>
       <th>進捗</th>
       <th>優先順位</th>
+      <th>タグ</th>
+      <th colspan=3>
     </tr>
   </thead>
   <tbody>
@@ -36,6 +43,11 @@
           <td><%= task.updated_at.strftime('%Y/%m/%d %R') %></td>
           <td><%= task.progress %></td>
           <td><%= task.priority %></td>
+          <td>
+            <% task.labels.each do |label| %>
+              <%= label.name %>
+            <% end %>
+          </td>
           <td><%= link_to "詳細", task %></td>
           <td><%= link_to "編集", edit_task_path(task.id) %></td>
           <td><%= button_to "削除", task_path(task.id), method: :delete %></td>

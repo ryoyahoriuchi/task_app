@@ -20,6 +20,11 @@ class Task < ApplicationRecord
   scope :name_search, -> (search){ where("name LIKE ?", "%#{search}%") }
   scope :priority_sorted, -> { order(priority: :desc)}
   scope :user_sorted, -> (user){ where(user_id: user)}
+  
+  scope :with_labels, -> { joins(:labels) }
+  scope :search_with_id, -> (labels){ where(labels: {id: labels}) }
 
   belongs_to :user
+  has_many :labelings, dependent: :destroy
+  has_many :labels, through: :labelings
 end
