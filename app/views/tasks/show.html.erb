@@ -5,5 +5,11 @@
 <p>タスク締切：<%= @task.deadline.strftime('%Y/%m/%d %R') %></p>
 <p>進捗：<%= @task.progress %></p>
 <p>優先順位：<%= @task.priority %></p>
+<p>
+  ラベル：
+  <% @task.labels.each do |label| %>
+    <%= label.name %>
+  <% end %>
+</p>
 
 <%= link_to "戻る", tasks_path %>

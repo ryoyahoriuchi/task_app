@@ -13,8 +13,9 @@
 <% end %>
 
 <%= form_with url: tasks_path, method: :get, local: true do |f| %>
+  <%= f.label :label %>
   <%= f.select("label_id", Label.pluck(:name, :id), { include_brank: true }) %>
-  <%= f.submit "検索", name: nil %>
+  <%= f.submit "ラベル検索", name: nil %>
 <% end %>
 
 <%= paginate @tasks %>
