@@ -17,9 +17,14 @@ class Task < ApplicationRecord
   scope :deadline_sorted, -> { order(deadline: :desc)}
   scope :update_sorted, -> { order(updated_at: :desc)}
   scope :progress_search, -> (search){where(progress: "#{search}")}
-  scope :name_search, -> (search){ where("name LIKE ?", "%#{search}%") }
+  scope :name_search, -> (search){ where("tasks.name LIKE ?", "%#{search}%") }
   scope :priority_sorted, -> { order(priority: :desc)}
   scope :user_sorted, -> (user){ where(user_id: user)}
+  
+  scope :with_labels, -> { joins(:labels) }
+  scope :search_with_id, -> (labels){ where(labels: {id: labels}) }
 
   belongs_to :user
+  has_many :labelings, dependent: :destroy
+  has_many :labels, through: :labelings
 end

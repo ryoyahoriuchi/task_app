@@ -10,6 +10,7 @@
       <th>更新日</th>
       <th>進捗</th>
       <th>優先順位</th>
+      <th>ラベル</th>
     </tr>
   </thead>
   <tbody>
@@ -21,6 +22,11 @@
           <td><%= task.updated_at.strftime('%Y/%m/%d %R') %></td>
           <td><%= task.progress %></td>
           <td><%= task.priority %></td>
+          <td>
+            <% task.labels.each do |label| %>
+              <%= label.name %>
+            <% end %>
+          </td>
         </tr>
     <% end %>
   </tbody>

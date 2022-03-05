@@ -26,6 +26,9 @@
   <%= f.label :priority %>
   <%= f.select :priority, Task.priorities.keys.to_a %>
 
+  <%= f.label :label %>
+  <%= f.collection_check_boxes(:label_ids, Label.all, :id, :name) %>
+
   <%= f.submit %>
 
   <%= link_to "戻る", tasks_path %>
