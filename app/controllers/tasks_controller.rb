@@ -6,12 +6,12 @@ class TasksController < ApplicationController
     tasks = Task.deadline_sorted if params[:sort_expired]
     tasks = Task.priority_sorted if params[:sort_priority]
 
-    if params[:progress].present? || params[:task].present?
+    if params[:progress].present?
+      tasks = tasks.with_labels.search_with_id(params[:label][:name]) if params[:label][:name].present?
       tasks = tasks.progress_search(params[:progress][:name]) if params[:progress][:name].present? #length != 0
-      tasks = tasks.name_search(params[:task][:search]) if params[:task].present?
+      tasks = tasks.name_search(params[:task][:search]) if params[:task][:search].present?
     end
     
-    tasks = tasks.with_labels.search_with_id(params[:label_id]) if params[:label_id].present?
     @tasks = tasks.user_sorted(current_user.id).page(params[:page]).per(10)
   end
 

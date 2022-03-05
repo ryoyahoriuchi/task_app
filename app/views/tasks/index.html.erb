@@ -9,13 +9,11 @@
 
   <%= f.label :progress %>
   <%= select :progress, :name, Task.progresses.keys.to_a, include_blank: true %>
-  <%= f.submit "検索" %>
-<% end %>
 
-<%= form_with url: tasks_path, method: :get, local: true do |f| %>
   <%= f.label :label %>
-  <%= f.select("label_id", Label.pluck(:name, :id), { include_brank: true }) %>
-  <%= f.submit "ラベル検索", name: nil %>
+  <%= select :label, :name, Label.pluck(:name, :id), include_blank: true %>
+
+  <%= f.submit "検索" %>
 <% end %>
 
 <%= paginate @tasks %>

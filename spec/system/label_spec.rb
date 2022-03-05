@@ -109,24 +109,24 @@ RSpec.describe 'ラベル機能', type: :system do
     end
     context 'ラベルを選択して検索する場合' do
       it '該当するラベルのみ表示される' do
-        select "青", from: "label_id"
-        click_button 'ラベル検索'
+        select "青", from: "label_name"
+        click_button '検索'
         id = all("table tbody tr")
         id.each do |i|
           expect(i).to_not have_content "赤"
           expect(i).to have_content "青"
           expect(i).to_not have_content "黄"
         end
-        select "赤", from: "label_id"
-        click_button 'ラベル検索'
+        select "赤", from: "label_name"
+        click_button '検索'
         id = all("table tbody tr")
         id.each do |i|
           expect(i).to have_content "赤"
           expect(i).to_not have_content "青"
           expect(i).to_not have_content "黄"
         end
-        select "黄", from: "label_id"
-        click_button 'ラベル検索'
+        select "黄", from: "label_name"
+        click_button '検索'
         id = all("table tbody tr")
         id.each do |i|
           expect(i).to_not have_content "赤"

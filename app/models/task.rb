@@ -17,7 +17,7 @@ class Task < ApplicationRecord
   scope :deadline_sorted, -> { order(deadline: :desc)}
   scope :update_sorted, -> { order(updated_at: :desc)}
   scope :progress_search, -> (search){where(progress: "#{search}")}
-  scope :name_search, -> (search){ where("name LIKE ?", "%#{search}%") }
+  scope :name_search, -> (search){ where("tasks.name LIKE ?", "%#{search}%") }
   scope :priority_sorted, -> { order(priority: :desc)}
   scope :user_sorted, -> (user){ where(user_id: user)}
   
